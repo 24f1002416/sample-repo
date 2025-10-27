@@ -2,21 +2,20 @@ name: Daily Commit Automation
 
 on:
   schedule:
-    # This uses "cron" syntax: minute hour day month weekday
-    # This example runs once a day at 6:00 UTC
-    - cron: "0 6 * * *"
-  workflow_dispatch:  # allows you to run manually for testing
+    - cron: "0 6 * * *"  # runs daily at 6:00 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write   # <-- this line gives permission to commit and push
 
 jobs:
   auto-commit:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out your repository so the workflow can access your files
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Make a small change (add date/time) and commit it
       - name: Add daily commit by 24f1002416@ds.study.iitm.ac.in
         run: |
           echo "Daily update: $(date)" >> daily-log.txt
